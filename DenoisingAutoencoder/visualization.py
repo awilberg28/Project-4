@@ -5,9 +5,10 @@ from matplotlib import pyplot as plt
 from keras.datasets import mnist
 from keras.preprocessing.image import load_img, img_to_array
 
+training_set, testing_set = mnist.load_data()
 
 def display_MNIST_samples():
-    # ** YOUR CODE HERE **
+    # 
     
 
 def display_NoisyOffice_samples():
