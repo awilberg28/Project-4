@@ -30,17 +30,16 @@ def displayListOfImgs(images):
     plt.show()
 
 def display_MNIST_samples():
-    displayListOfImgs(training_set[0][:10])
-    displayListOfImgs(testing_set[0][:10])
+    samples = []
+    for digit in range(10):
+        # Get the first image that matches the current digit
+        index = np.where(training_labels == digit)[0][0]
+        samples.append(training_images[index])
+
+    displayListOfImgs(samples)
 
 def display_NoisyOffice_samples():
     return
-
-def display_NoisyOffice_samples():
-    pass
-    # ** YOUR CODE HERE **
-    
->>>>>>> refs/remotes/origin/morgan
 
 display_MNIST_samples()
 display_NoisyOffice_samples()
