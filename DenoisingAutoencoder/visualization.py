@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 from keras.datasets import mnist
 from keras.preprocessing.image import load_img, img_to_array
 
-training_set, testing_set = mnist.load_data()
+(training_images, training_labels), (testing_images, testing_labels) = mnist.load_data()
 
 def displayListOfImgs(images):
     num_images = len(images)
@@ -17,7 +17,7 @@ def displayListOfImgs(images):
     if num_rows > 1 or num_cols > 1:axes = axes.flatten()
     else:axes = [axes]
 
-    for (i,image) in enumerate(firstTen):
+    for (i,image) in enumerate(images):
         if i < len(axes):
             axes[i].imshow(image)
             axes[i].set_title(f"Image {i+1}")
@@ -35,6 +35,12 @@ def display_MNIST_samples():
 
 def display_NoisyOffice_samples():
     return
+
+def display_NoisyOffice_samples():
+    pass
+    # ** YOUR CODE HERE **
+    
+>>>>>>> refs/remotes/origin/morgan
 
 display_MNIST_samples()
 display_NoisyOffice_samples()
