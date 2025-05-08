@@ -8,11 +8,43 @@ from keras.preprocessing.image import load_img, img_to_array
 
 (training_images, training_labels), (testing_images, testing_labels) = mnist.load_data()
 
+def NOISYOFFICE_Output(images, row_titles=["Noisy, Clean, Denoised"]):
+    num_images = len(images)
+    num_cols = 3
+    num_rows = round(num_images/num_cols)
+    
+    fig, axes = plt.subplots(num_rows, num_cols, figsize=(10, 10))
+    
+    if num_rows > 1 or num_cols > 1:
+        axes = axes.flatten()
+    else:
+        axes = [axes]
+
+    for i, image in enumerate(images):
+        if i < len(axes):
+            axes[i].imshow(image, cmap='gray')
+            axes[i].axis('off')
+
+    if num_images < len(axes):
+        for i in range(num_images, len(axes)):
+            fig.delaxes(axes[i])
+
+        # Adjust the figure layout to make room on the left
+    plt.subplots_adjust(left=0.15, wspace=0, hspace=0.05)
+
+    # Add row titles to the far left
+    row_positions = [0.81, 0.52, 0.23]  # Y positions for the 3 rows (top to bottom)
+    for i, title in enumerate(row_titles):
+        fig.text(0.10, row_positions[i], title, va='center', ha='right', fontsize=14)
+
+    plt.show()
+    
+
 
 def MNIST_Output(images, row_titles=["Clean", "Noisy", "Denoised"]):
     num_images = len(images)
     num_rows = 3
-    num_cols = round(num_images / 3)
+    num_cols = round(num_images / num_rows)
 
     fig, axes = plt.subplots(num_rows, num_cols, figsize=(10, 10))
 
