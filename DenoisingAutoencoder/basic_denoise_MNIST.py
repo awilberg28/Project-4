@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 import random
 import visualization
+
 from keras.layers import Activation
 from keras.layers import Dropout
 from keras.layers import BatchNormalization
@@ -35,6 +36,22 @@ test_noisy = np.clip(test_noisy, 0., 1.)
 
 model = Sequential()
 
+
+# ADDISON
+model.add(Dense(256, activation='exponential', input_shape=(784,)))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(256, activation='relu'))
+model.add(Dense(784,activation='sigmoid'))
+
+
+model.compile(optimizer='adam', loss='binary_crossentropy')
+
+model.fit(train_noisy, train,
+          epochs=4,
+          batch_size=64,
+          shuffle=True,
+          validation_data=(test_noisy, test))
+
 # MARCO
 # model.add(Dense(256, activation='relu', input_shape=(784,)))
 # model.add(BatchNormalization())  # Add batch normalization after each dense layer
@@ -50,14 +67,7 @@ model = Sequential()
 #           validation_data=(test_noisy, test))
 
 
-# ADDISON
-model.compile(optimizer='adam', loss='binary_crossentropy')
 
-model.fit(train_noisy, train,
-          epochs=4,
-          batch_size=64,
-          shuffle=True,
-          validation_data=(test_noisy, test))
 
 
 decoded_imgs = model.predict(test_noisy)
@@ -66,6 +76,7 @@ decoded_imgs = model.predict(test_noisy)
 images = []
 
 for i in range(10):
+
     images.append(test[i+10].reshape(28,28))
     images.append(test_noisy[i+10].reshape(28,28))
     images.append(decoded_imgs[i+10].reshape(28,28))
