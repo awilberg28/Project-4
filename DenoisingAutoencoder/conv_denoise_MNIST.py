@@ -9,6 +9,7 @@ import random
 import visualization
 
 
+
 ## ** YOUR CODE HERE **
 (train, trainLabel), (test, testLabel) = mnist.load_data()
 
