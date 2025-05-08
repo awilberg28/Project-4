@@ -34,18 +34,20 @@ test_noisy = np.clip(test_noisy, 0., 1.)
 
 
 model = Sequential()
-model.add(Dense(256, activation='relu', input_shape=(784,)))
-model.add(BatchNormalization())  # Add batch normalization after each dense layer
-model.add(Dense(128, activation='sigmoid'))
-model.add(Dense(256, activation='relu'))
-model.add(Dense(784,activation='sigmoid'))
 
-model.compile(optimizer=Adam(learning_rate=0.005), loss='binary_crossentropy')
-model.fit(train_noisy, train,
-          epochs=4,
-          batch_size=48,
-          shuffle=True,
-          validation_data=(test_noisy, test))
+# MARCO
+# model.add(Dense(256, activation='relu', input_shape=(784,)))
+# model.add(BatchNormalization())  # Add batch normalization after each dense layer
+# model.add(Dense(128, activation='sigmoid'))
+# model.add(Dense(256, activation='relu'))
+# model.add(Dense(784,activation='sigmoid'))
+
+# model.compile(optimizer=Adam(learning_rate=0.005), loss='binary_crossentropy')
+# model.fit(train_noisy, train,
+#           epochs=4,
+#           batch_size=48,
+#           shuffle=True,
+#           validation_data=(test_noisy, test))
 
 decoded_imgs = model.predict(test_noisy)
 
