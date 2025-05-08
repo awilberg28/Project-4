@@ -38,16 +38,16 @@ model = Sequential()
 
 
 # ADDISON
+model = Sequential()
 model.add(Dense(256, activation='exponential', input_shape=(784,)))
 model.add(Dense(128, activation='relu'))
 model.add(Dense(256, activation='relu'))
 model.add(Dense(784,activation='sigmoid'))
 
-
 model.compile(optimizer='adam', loss='binary_crossentropy')
 
 model.fit(train_noisy, train,
-          epochs=4,
+          epochs=3,
           batch_size=64,
           shuffle=True,
           validation_data=(test_noisy, test))
@@ -75,12 +75,14 @@ decoded_imgs = model.predict(test_noisy)
 
 images = []
 
-for i in range(10):
+for i in range(5):
+    images.append(test[i+5].reshape(28,28))
 
-    images.append(test[i+10].reshape(28,28))
-    images.append(test_noisy[i+10].reshape(28,28))
-    images.append(decoded_imgs[i+10].reshape(28,28))
+for i in range(5):
+    images.append(test_noisy[i+5].reshape(28,28))
 
-visualization.displayListOfImgs(images)
+for i in range(5):
+    images.append(decoded_imgs[i+5].reshape(28,28))
 
+visualization.MNIST_Output(images)
  
