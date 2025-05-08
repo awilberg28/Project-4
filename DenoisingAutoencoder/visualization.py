@@ -29,6 +29,7 @@ def displayListOfImgs(images):
     plt.tight_layout()
     plt.show()
 
+
 def display_MNIST_samples():
     samples = []
     for digit in range(10):
