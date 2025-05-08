@@ -22,7 +22,7 @@ test = test.reshape((len(test),28*28))
 train = train.astype('float32') / 255. 
 test = test.astype('float32') / 255. 
 
-noise_factor = 0.5
+noise_factor = 0.4
 train_noisy = train + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=train.shape)
 test_noisy = test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=test.shape)  
 

@@ -17,3 +17,4 @@ dependencies:
     - piexif==1.1.2
     - keras
     - tensorflow
+    - opencv-python
