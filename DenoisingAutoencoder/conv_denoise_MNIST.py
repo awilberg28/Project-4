@@ -51,11 +51,17 @@ model.fit(train_noisy, train,
 
 decoded_imgs = model.predict(test_noisy)
 
+
+
 images = []
 
 for i in range(5):
-    images.append(test[i+10].reshape(28,28))
-    images.append(test_noisy[i+10].reshape(28,28))
-    images.append(decoded_imgs[i+10].reshape(28,28))
+    images.append(test[i+5].reshape(28,28))
 
-visualization.displayListOfImgs(images)
+for i in range(5):
+    images.append(test_noisy[i+5].reshape(28,28))
+
+for i in range(5):
+    images.append(decoded_imgs[i+5].reshape(28,28))
+
+visualization.MNIST_Output(images)
