@@ -49,6 +49,17 @@ model = Sequential()
 #           shuffle=True,
 #           validation_data=(test_noisy, test))
 
+
+# ADDISON
+model.compile(optimizer='adam', loss='binary_crossentropy')
+
+model.fit(train_noisy, train,
+          epochs=4,
+          batch_size=64,
+          shuffle=True,
+          validation_data=(test_noisy, test))
+
+
 decoded_imgs = model.predict(test_noisy)
 
 
