@@ -55,15 +55,20 @@ model = Sequential()
 
 # Encoder
 model.add(Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=(540, 420, 1)))
+
+#COMMENT OUT FOR SPEED
 model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
 # model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
 
-# Latent representation (still spatial, just lower channel depth)
+
+#COMMENT OUT FOR SPEED
 model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
 
 # Decoder
 # model.add(Conv2DTranspose(128, (3, 3), activation='relu', padding='same'))
+#COMMENT OUT FOR SPEED
 model.add(Conv2DTranspose(64, (3, 3), activation='relu', padding='same'))
+#COMMENT OUT FOR SPEED
 model.add(Conv2DTranspose(32, (3, 3), activation='relu', padding='same'))
 
 # Output layer (reconstruct the image)
