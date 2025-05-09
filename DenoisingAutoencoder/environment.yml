@@ -1,6 +1,6 @@
 name: project3
 dependencies:
-  - python==3.11.11
+  - python==3.9
   - pandas
   - numpy
   - matplotlib
@@ -8,7 +8,6 @@ dependencies:
   - opencv
   - seaborn
   - scikit-learn
-  - mkl-service
   - theano
   - pillow
   - ipykernel
