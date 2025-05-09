@@ -10,10 +10,18 @@ from matplotlib import pyplot as plt
 import random
 import visualization
 
-# Paths to the noisy and clean images
-noisy_dir = '/Users/marcojonsson/AI_Class/Project-4/DenoisingAutoencoder/Noisy_Documents/noisyPadded'
-clean_dir = '/Users/marcojonsson/AI_Class/Project-4/DenoisingAutoencoder/Noisy_Documents/cleanPadded'
 
+# Get the current working directory (project root)
+project_root = os.path.abspath(os.path.dirname(__file__))  # Gets the directory of the script
+
+# Define relative paths from the project root
+noisy_dir = os.path.join(project_root, 'Noisy_Documents/noisyPadded')
+clean_dir = os.path.join(project_root, 'Noisy_Documents/cleanPadded')
+test_noisy_dir = os.path.join(project_root, 'Noisy_Documents/testCleanPadded')
+test_clean_dir = os.path.join(project_root, 'Noisy_Documents/testNoisyPadded')
+
+
+# Function to load and preprocess images
 # Function to load and preprocess images
 def load_images_from_directory(directory, target_size=(540, 420)):
     image_files = [f for f in os.listdir(directory) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
@@ -33,10 +41,14 @@ def load_images_from_directory(directory, target_size=(540, 420)):
 # Load clean and noisy images
 train_noisy = load_images_from_directory(noisy_dir)
 train_clean = load_images_from_directory(clean_dir)
+test_noisy = load_images_from_directory(test_noisy_dir)
+test_clean = load_images_from_directory(test_clean_dir)
 
 # Reshape the images to have 1 channel (for grayscale images)
-train_noisy = np.reshape(train_noisy, (len(train_noisy), 540, 420, 1))
-train_clean = np.reshape(train_clean, (len(train_clean), 540, 420, 1))
+train_noisy = np.expand_dims(train_noisy, axis=-1)  # Shape (num_samples, 540, 420, 1)
+train_clean = np.expand_dims(train_clean, axis=-1)  # Shape (num_samples, 540, 420, 1)
+test_noisy = np.expand_dims(test_noisy, axis=-1)    # Shape (num_samples, 540, 420, 1)
+test_clean = np.expand_dims(test_clean, axis=-1)    # Shape (num_samples, 540, 420, 1)
 
 # Define the convolutional autoencoder model
 model = Sequential()
@@ -44,13 +56,13 @@ model = Sequential()
 # Encoder
 model.add(Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=(540, 420, 1)))
 model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
-model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
+# model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
 
 # Latent representation (still spatial, just lower channel depth)
 model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
 
 # Decoder
-model.add(Conv2DTranspose(128, (3, 3), activation='relu', padding='same'))
+# model.add(Conv2DTranspose(128, (3, 3), activation='relu', padding='same'))
 model.add(Conv2DTranspose(64, (3, 3), activation='relu', padding='same'))
 model.add(Conv2DTranspose(32, (3, 3), activation='relu', padding='same'))
 
@@ -62,22 +74,27 @@ model.compile(optimizer=Adam(), loss='binary_crossentropy')
 
 # Train the model on noisy and clean images
 model.fit(train_noisy, train_clean,
-          epochs=3,
-          batch_size=2,
+          epochs=2,
+          batch_size=5,
           shuffle=True,
           validation_split=0.2)
 
 # Predict the denoised images
-decoded_imgs = model.predict(train_noisy)
+decoded_imgs = model.predict(test_noisy)
 
 # Display original clean image, noisy image, and denoised image
 images = []
 
-# Select a few images to display (you can change the range as needed)
-for i in range(5):
-    images.append(train_clean[i].reshape(540, 420))  # Original clean image
-    images.append(train_noisy[i].reshape(540, 420))  # Noisy image
-    images.append(decoded_imgs[i].reshape(540, 420))  # Denoised image
+
+for i in range(3):
+    images.append(test_clean[i])
+
+for i in range(3):
+    images.append(test_noisy[i])
+
+for i in range(3):
+    images.append(decoded_imgs[i])
+
 
 # Use visualization function to display images
-visualization.displayListOfImgs(images)
+visualization.NOISYOFFICE_Output(images)

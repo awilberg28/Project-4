@@ -8,37 +8,44 @@ from keras.preprocessing.image import load_img, img_to_array
 
 (training_images, training_labels), (testing_images, testing_labels) = mnist.load_data()
 
-def NOISYOFFICE_Output(images, row_titles=["Noisy, Clean, Denoised"]):
+
+def NOISYOFFICE_Output(images, row_titles=["Noisy", "Clean", "Denoised"]):
     num_images = len(images)
+    
+    # Set number of columns (3 for noisy, clean, denoised)
     num_cols = 3
-    num_rows = round(num_images/num_cols)
+    num_rows = (num_images + num_cols - 1) // num_cols  # Compute number of rows required
     
-    fig, axes = plt.subplots(num_rows, num_cols, figsize=(10, 10))
+    # Create the subplots
+    fig, axes = plt.subplots(num_rows, num_cols, figsize=(10, num_rows * 3))  # Adjust height per row
     
+    # Flatten axes if more than 1 row or column
     if num_rows > 1 or num_cols > 1:
         axes = axes.flatten()
     else:
         axes = [axes]
 
+    # Display images
     for i, image in enumerate(images):
         if i < len(axes):
             axes[i].imshow(image, cmap='gray')
             axes[i].axis('off')
 
+    # Remove unused axes if there are any empty spots
     if num_images < len(axes):
         for i in range(num_images, len(axes)):
             fig.delaxes(axes[i])
 
-        # Adjust the figure layout to make room on the left
-    plt.subplots_adjust(left=0.15, wspace=0, hspace=0.05)
+    # Adjust the figure layout to make room on the left for row titles
+    plt.subplots_adjust(left=0.15, wspace=0.05, hspace=0.05)
 
-    # Add row titles to the far left
-    row_positions = [0.81, 0.52, 0.23]  # Y positions for the 3 rows (top to bottom)
+    # Add row titles on the left
+    row_positions = [0.9, 0.5, 0.1]  # Y positions for row titles
     for i, title in enumerate(row_titles):
-        fig.text(0.10, row_positions[i], title, va='center', ha='right', fontsize=14)
+        fig.text(0.05, row_positions[i], title, va='center', ha='right', fontsize=14, weight='bold')
 
-    plt.show()
-    
+    # Show the plot
+    plt.show()    
 
 
 def MNIST_Output(images, row_titles=["Clean", "Noisy", "Denoised"]):
