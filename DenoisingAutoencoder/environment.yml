@@ -1,6 +1,9 @@
-name: project3
+name: denoising-autoencoder
+channels:
+  - conda-forge
+  - defaults
 dependencies:
-  - python==3.9
+  - python=3.9
   - pandas
   - numpy
   - matplotlib
@@ -8,12 +11,13 @@ dependencies:
   - opencv
   - seaborn
   - scikit-learn
-  - theano
   - pillow
   - ipykernel
   - jupyter
+  - pip
   - pip:
     - piexif
     - keras
     - tensorflow
     - opencv-python
+    - theano
