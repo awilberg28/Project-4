@@ -16,8 +16,6 @@ dependencies:
   - jupyter
   - pip
   - pip:
-    - piexif
     - keras
     - tensorflow
     - opencv-python
-    - theano
