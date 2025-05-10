@@ -9,8 +9,6 @@ import random
 import visualization
 
 
-
-## ** YOUR CODE HERE **
 (train, trainLabel), (test, testLabel) = mnist.load_data()
 
 train = train.astype('float32') / 255. 
@@ -19,9 +17,10 @@ test = test.astype('float32') / 255.
 train = np.reshape(train, (len(train), 28, 28, 1))
 test = np.reshape(test, (len(test), 28, 28, 1))
 
-noise_factor = .4
-train_noisy = train + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=train.shape)
-test_noisy = test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=test.shape)  
+training_noise_factor = 0.4
+train_noisy = train + training_noise_factor * np.random.normal(loc=0.0, scale=1.0, size=train.shape)
+test_noise_factor = 0.4
+test_noisy = test + training_noise_factor * np.random.normal(loc=0.0, scale=1.0, size=test.shape)  
 
 train_noisy = np.clip(train_noisy, 0., 1.)
 test_noisy = np.clip(test_noisy, 0., 1.)

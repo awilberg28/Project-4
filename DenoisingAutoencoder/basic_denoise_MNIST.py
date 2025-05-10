@@ -15,7 +15,6 @@ from keras.layers import BatchNormalization
 from keras.optimizers import Adam
 
 
- # ** YOUR CODE HERE **
 
 
 (train, trainLabel), (test, testLabel) = mnist.load_data()
@@ -24,9 +23,10 @@ test = test.reshape((len(test),28*28))
 train = train.astype('float32') / 255. 
 test = test.astype('float32') / 255. 
 
-noise_factor = 0.4
-train_noisy = train + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=train.shape)
-test_noisy = test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=test.shape)  
+training_noise_factor = 0.5
+train_noisy = train + training_noise_factor * np.random.normal(loc=0.0, scale=1.0, size=train.shape)
+test_noise_factor = 0.5
+test_noisy = test + test_noise_factor * np.random.normal(loc=0.0, scale=1.0, size=test.shape)  
 
 train_noisy = np.clip(train_noisy, 0., 1.)
 test_noisy = np.clip(test_noisy, 0., 1.)
@@ -77,13 +77,13 @@ decoded_imgs = model.predict(test_noisy)
 images = []
 
 for i in range(5):
-    images.append(test[i+5].reshape(28,28))
+    images.append(test[i].reshape(28,28))
 
 for i in range(5):
-    images.append(test_noisy[i+5].reshape(28,28))
+    images.append(test_noisy[i].reshape(28,28))
 
 for i in range(5):
-    images.append(decoded_imgs[i+5].reshape(28,28))
+    images.append(decoded_imgs[i].reshape(28,28))
 
 visualization.MNIST_Output(images)
  

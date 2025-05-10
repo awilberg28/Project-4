@@ -12,7 +12,7 @@ import visualization
 
 
 # Get the current working directory (project root)
-project_root = os.path.abspath(os.path.dirname(__file__))  # Gets the directory of the script
+project_root = os.path.abspath(os.path.dirname(__file__)) 
 
 # Define relative paths from the project root
 noisy_dir = os.path.join(project_root, 'Noisy_Documents/noisyPadded')
@@ -21,7 +21,6 @@ test_noisy_dir = os.path.join(project_root, 'Noisy_Documents/testCleanPadded')
 test_clean_dir = os.path.join(project_root, 'Noisy_Documents/testNoisyPadded')
 
 
-# Function to load and preprocess images
 # Function to load and preprocess images
 def load_images_from_directory(directory, target_size=(540, 420)):
     image_files = [f for f in os.listdir(directory) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
@@ -58,14 +57,13 @@ model.add(Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=(540
 
 #COMMENT OUT FOR SPEED
 model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
-# model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
-
-
+model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
 #COMMENT OUT FOR SPEED
+# Latent Representation
 model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
 
 # Decoder
-# model.add(Conv2DTranspose(128, (3, 3), activation='relu', padding='same'))
+model.add(Conv2DTranspose(128, (3, 3), activation='relu', padding='same'))
 #COMMENT OUT FOR SPEED
 model.add(Conv2DTranspose(64, (3, 3), activation='relu', padding='same'))
 #COMMENT OUT FOR SPEED
@@ -79,7 +77,7 @@ model.compile(optimizer=Adam(), loss='binary_crossentropy')
 
 # Train the model on noisy and clean images
 model.fit(train_noisy, train_clean,
-          epochs=2,
+          epochs=1,
           batch_size=5,
           shuffle=True,
           validation_split=0.2)
